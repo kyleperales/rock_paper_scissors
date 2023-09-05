@@ -2,6 +2,50 @@ const options = ['rock', 'paper', 'scissors'];
 let wins = 0
 let lose = 0
 
+const rock = document.querySelector('#rock')
+const paper = document.querySelector('#paper')
+const scissors = document.querySelector('#scissors')
+const round = document.querySelector('#roundResult')
+const game = document.querySelector('#gameResult')
+
+function resetScores() {
+    wins = 0
+    lose = 0
+}
+
+function getResult() {
+    if (wins === 5 && lose === 5) {
+        resetScores()
+        return 'It\'s a tie, try again!';
+    } else {
+        if (wins === 5) {
+            resetScores()
+            return 'You win the game! Congratulations.';
+        }
+        else if (lose === 5) {
+            resetScores()
+            return 'You lose the game, better luck next time!';
+        }
+    }
+}
+
+function showResult(playerSelection, computerChoice = getComputerChoice()) {
+    round.textContent = playRound(playerSelection, computerChoice)
+    game.textContent = getResult()
+}
+
+rock.addEventListener('click', (e) => {
+    showResult(options[0])
+})
+
+paper.addEventListener('click', (e) => {
+    showResult(options[1])
+})
+
+scissors.addEventListener('click', (e) => {
+    showResult(options[2])
+})
+
 function getComputerChoice() {
     const idx = Math.floor(Math.random() * 3);
     return options[idx];
@@ -55,23 +99,3 @@ function playRound(playerChoice, computerChoice) {
     }
 }
 
-const playerChoice = 'rock';
-
-
-function game() {
-    for(i = 1; i <= 5; i++) {
-        const round = playRound(playerChoice, getComputerChoice());
-        console.log(`Round ${i}:`, round);
-    }
-
-    if (wins > lose) {
-        console.log('You win the game! Congratulations.');
-    }
-    else if (lose > wins) {
-        console.log('You lose the game, better luck next time!');
-    } else {
-        console.log('It\'s a tie, try again!')
-    }
-}
-
-game();
